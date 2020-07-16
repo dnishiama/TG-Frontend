@@ -23,7 +23,7 @@
             <th>Id</th>
             <th>Nome</th>
             <th>E-mail</th>
-            <th class="actions">Ações</th>
+            <th class="actions" v-if="autorizacao === '[ROLE_ADMIN]'">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -96,7 +96,6 @@ export default {
     },
     editar(emailGestor) {
       this.$router.push("/gestor/atualizar/" + emailGestor);
-      alert(emailGestor);
     }
   }
 };
