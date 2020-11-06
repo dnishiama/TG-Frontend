@@ -3,7 +3,9 @@
     <div id="nav" class="row text-center">
       <router-link to="/login">Login</router-link> |
       <router-link to="/">Home</router-link> |
-      <router-link to="/gestor">Gestor</router-link>
+      <router-link to="/gestor">Gestor</router-link> |
+      <router-link to="/departamento">Departamento</router-link> |
+      <router-link to="/impressora">Impressora</router-link>
     </div>
     <router-view />
   </div>

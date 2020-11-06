@@ -30,6 +30,38 @@ const routes = [
     name: "Gestor-Edit",
     component: () => import("../views/Gestor-Edit.vue"),
     props: true
+  },
+  {
+    path: "/impressora",
+    name: "Impressora",
+    component: () => import("../views/Impressora.vue")
+  },
+  {
+    path: "/impressora/cadastrar",
+    name: "Impressora-Add",
+    component: () => import("../views/Impressora-Add.vue")
+  },
+  {
+    path: "/impressora/atualizar/:id",
+    name: "Impressora-Edit",
+    component: () => import("../views/Impressora-Edit.vue"),
+    props: true
+  },
+  {
+    path: "/departamento",
+    name: "Departamento",
+    component: () => import("../views/Departamento.vue")
+  },
+  {
+    path: "/departamento/cadastrar",
+    name: "Departamento-Add",
+    component: () => import("../views/Departamento-Add.vue")
+  },
+  {
+    path: "/departamento/atualizar/:id",
+    name: "Departamento-Edit",
+    component: () => import("../views/Departamento-Edit.vue"),
+    props: true
   }
 ];
 
