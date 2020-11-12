@@ -56,7 +56,6 @@ export default {
   },
   methods: {    
     cadastrar() {
-        alert("Campus " + this.campus + ", Bloco " + this.bloco + ", Departamento " + this.departamento + ", ccusto " + this.ccusto + ", gestor " + this.gestor);
         axios
           .post("/departamento/cadastrar/", {campus: this.campus, bloco: this.bloco, departamento: this.departamento, ccusto: this.ccusto, gestor: {id: this.gestor},},
                 {headers: { Accept: "application/json" }

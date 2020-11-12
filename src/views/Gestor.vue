@@ -10,14 +10,7 @@
     </div>
 
     <div id="divListar">
-      <div class="col-lg-12">
-        <h2>Listar</h2>Clique no botão para visualizar o gestores cadastrados
-        <button
-          v-on:click="buscarTodos"
-          class="glyphicon glyphicon-plus"
-        ></button>
-      </div>
-      <table id="tabGestor" hidden="true" class="table table-striped">
+      <table id="tabGestor" class="table table-striped">
         <thead>
           <tr>
             <th>Id</th>
@@ -68,20 +61,16 @@ export default {
   computed: {
     ...mapState(["usuario", "autorizacao"])
   },
-  methods: {
-    buscarTodos() {
-      var show = document.getElementById("tabGestor");
-      if (show.hidden === true) {
-        show.hidden = false;
-      }
-      axios
+  beforeMount() {
+    axios
         .get("/gestor", { headers: { Accept: "application/json" } })
         .then(res => {
           console.log(res);
           this.gestores = res.data;
         })
         .catch(error => console.log(error));
-    },
+  },
+  methods: {
     excluir(id) {
       var resposta = confirm("Deseja remover esse registro?");
       if (resposta == true) {

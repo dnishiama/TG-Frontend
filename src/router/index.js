@@ -62,7 +62,17 @@ const routes = [
     name: "Departamento-Edit",
     component: () => import("../views/Departamento-Edit.vue"),
     props: true
-  }
+  },
+  {
+    path: "/usuario",
+    name: "Usuario",
+    component: () => import("../views/Usuario.vue")
+  },
+  {
+    path: "/usuario/cadastrar",
+    name: "Usuario-Add",
+    component: () => import("../views/Usuario-Add.vue")
+  },
 ];
 
 const router = new VueRouter({

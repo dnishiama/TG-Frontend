@@ -1,16 +1,24 @@
 <template>
   <div id="app" class="container">
     <div id="nav" class="row text-center">
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/">Home</router-link> |
-      <router-link to="/gestor">Gestor</router-link> |
-      <router-link to="/departamento">Departamento</router-link> |
-      <router-link to="/impressora">Impressora</router-link>
+      <router-link to="/login">Login | </router-link>
+      <router-link to="/">Home </router-link>
+      <router-link to="/gestor" v-if="autorizacao === '[ROLE_ADMIN]'"> | Gestor </router-link>
+      <router-link to="/departamento" v-if="autorizacao === '[ROLE_ADMIN]'"> | Departamento </router-link>
+      <router-link to="/impressora" v-if="autorizacao === '[ROLE_ADMIN]'"> | Impressora </router-link>
+      <router-link to="/usuario" v-if="autorizacao === '[ROLE_ADMIN]'"> | Usuario</router-link>
     </div>
     <router-view />
   </div>
 </template>
-
+<script>
+import { mapState } from "vuex";
+export default {
+   computed: {
+    ...mapState(["usuario", "autorizacao"])
+  }
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
