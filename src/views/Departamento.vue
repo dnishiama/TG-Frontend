@@ -73,7 +73,11 @@ export default {
   computed: {
     ...mapState(["usuario", "autorizacao"])
   },
+
+  
+
   beforeMount() {
+    console.log(this.autorizacao);
     axios
         .get("/departamento", { headers: { Accept: "application/json" } })
         .then(res => {

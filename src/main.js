@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from 'axios'
+
 axios.interceptors.request.use(config => {
   if(store.state.token && store.state.autorizacao) {
   config.headers.Authorization = store.state.token;

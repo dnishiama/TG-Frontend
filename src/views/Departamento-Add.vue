@@ -31,15 +31,6 @@
 import axios from "axios";
 import { mapState } from "vuex";
 export default {
-  beforeMount() {
-    axios
-        .get("/gestor", { headers: { Accept: "application/json" } })
-        .then(res => {
-          console.log(res);
-          this.gestores = res.data;
-        })
-        .catch(error => console.log(error));
-  },
   name: "gestor",
   data() {
     return {
@@ -50,6 +41,15 @@ export default {
       gestor: "",
       gestores: []
     };
+  },
+  beforeMount() {
+    axios
+        .get("/gestor", { headers: { Accept: "application/json" } })
+        .then(res => {
+          console.log(res);
+          this.gestores = res.data;
+        })
+        .catch(error => console.log(error));
   },
   computed: {
     ...mapState(["usuario", "autorizacao"])
