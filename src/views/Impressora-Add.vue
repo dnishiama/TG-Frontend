@@ -30,15 +30,8 @@ export default {
   name: "impressora",
   data() {
     return {
-      id: "",
       Patrimonio: "",
-      Fabricante: "",
-      Modelo: "",
-      Serial: "",
       Ip: "",
-      ContadorMono: "",
-      ContadorColor: "",
-      ultimoUpdate: "",
       departamento: "",
       departamentos: []
     };

@@ -38,16 +38,18 @@ export default {
   methods: {
     cadastrar() {
         axios
-          .post("/gestor/cadastrar/", {nome: this.nome,email: this.email,},
-                 {headers: { Accept: "application/json" }
+          .post("/gestor/cadastrar/", 
+              {nome: this.nome,email: this.email,},
+              {headers: { Accept: "application/json"}
         })
           .then(res => {
             console.log(res);
             this.nome = "";
             this.email = "";
+            this.$router.push({ path: "/gestor" })
             alert("Gestor cadastrado com sucesso!!!");
           })
-          .catch(error => console.log(error));
+          .catch(error => console.log(error));          
       }
     }
   }

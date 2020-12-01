@@ -3,10 +3,10 @@
     <div id="nav" class="row text-center">
       <router-link to="/login" v-if="!usuario">Login | </router-link>
       <router-link to="/">Home </router-link>
-      <router-link to="/gestor" v-if="autorizacao === '[ROLE_ADMIN]'"> | Gestor </router-link>
-      <router-link to="/departamento" v-if="autorizacao === '[ROLE_ADMIN]'"> | Departamento </router-link>
-      <router-link to="/impressora" v-if="autorizacao === '[ROLE_ADMIN]'"> | Impressora </router-link>
-      <router-link to="/usuario" v-if="autorizacao === '[ROLE_ADMIN]'"> | Usuario</router-link>
+      <router-link to="/gestor"> | Gestor </router-link>
+      <router-link to="/departamento"> | Departamento </router-link>
+      <router-link to="/impressora"> | Impressora </router-link>
+      <router-link to="/usuario"> | Usuario</router-link>
       <a v-if="usuario" @click="logout"> | Logout</a> 
       
     </div>

@@ -5,15 +5,19 @@
     </div>
     <div id="divAtualizar" class="col-lg-12">
       <form>
+
         <div class="form-group">
-          <label for="nome">Nome</label>
-          <input type="text" class="form-control" id="nome" aria-describedby="emailHelp" placeholder="Seu nome" v-model="gestor.nome" required />
+          <label for="patrimonio">Patrimônio</label>
+          <input type="text" class="form-control" id="patrimonio" placeholder="Patrimônio" v-model="patrimonio" required />
+          <label for="ip">IP</label>
+          <input type="text" class="form-control" id="ip" placeholder="IP" v-model="ip" required />
+          <label for="departamento">Departamento</label>
+          <select v-model="departamento" class="form-control" id="departamento" required>
+            <option v-for="departamento in departamentos" v-bind:key="departamento.id" v-bind:value="departamento.id">{{ departamento.campus }} - {{ departamento.bloco }} - {{ departamento.departamento }}</option>
+          </select>
         </div>
-        <div class="form-group">
-          <label for="email">Endereço de email</label>
-          <input type="email" class="form-control" id="email" placeholder="emailAsProps" v-model="gestor.email" required readonly/>
-        </div>
-        <button type="submit" class="btn btn-primary" v-on:click="editar()">Enviar</button>
+        <button type="submit" class="btn btn-primary" v-on:click="cadastrar()">Enviar</button>
+
       </form>      
     </div>
   </div>
@@ -23,24 +27,39 @@
 import axios from "axios";
 import { mapState } from "vuex";
 export default {
-  name: "gestor",
-    props: ['gestor'],
+  name: "impressora",
+    props: ['impressora'],
   data() {
     return {
       id: "",
-      nome: "",
-      email: ""
+      Patrimonio: "",
+      Fabricante: "",
+      Modelo: "",
+      Serial: "",
+      Ip: "",
+      ContadorMono: "",
+      ContadorColor: "",
+      ultimoUpdate: "",
     };
   },
   computed: {
     ...mapState(["usuario", "autorizacao"])
   },
+  beforeMount() {
+    axios
+        .get("/departamento", { headers: { Accept: "application/json" } })
+        .then(res => {
+          console.log(res);
+          this.departamentos = res.data;
+        })
+        .catch(error => console.log(error));
+  },
   methods: {
     editar() {
-        axios.put('gestor/atualizar/'+this.gestor.id,
+        axios.put('impressora/atualizar/'+this.impressora.patrimonio,
         {
-            nome: this.gestor.nome,
-            email: this.gestor.email,
+            patrimonio: this.impressora.patrimonio,
+            ip: this.impressora.ip,
         })
         .then(res => {
             console.log(res);
@@ -63,7 +82,7 @@ export default {
         .catch(error => console.log(error));
     }
   },
-created () {
+  created () {
     this.buscarEmail(this.gestor)
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="card-body">
-    <div class="col-lg-12" v-if="autorizacao === '[ROLE_ADMIN]'">
+    <div class="col-lg-12">
       <router-link
         class="glyphicon glyphicon-plus btn-lg"
         to="/gestor/cadastrar"
@@ -13,26 +13,26 @@
       <table id="tabGestor" class="table table-striped">
         <thead>
           <tr>
-            <th>Id</th>
+            
             <th>Nome</th>
             <th>E-mail</th>
-            <th class="actions" v-if="autorizacao === '[ROLE_ADMIN]'">Ações</th>
+            <th class="actions">Ações</th>
           </tr>
         </thead>
         <tbody>
           <tr v-bind:gestor="gestor" v-for="gestor in gestores" :key="gestor.id">
-            <td>{{ gestor.id }}</td>
+            
             <td>{{ gestor.nome }}</td>
             <td>{{ gestor.email }}</td>
             <button
-              v-if="autorizacao === '[ROLE_ADMIN]'"
+              
               class="glyphicon glyphicon-trash mr-1"
               type="submit"
               style="color:red"
               v-on:click="excluir(gestor.id)"
             ></button>
             <button
-              v-if="autorizacao === '[ROLE_ADMIN]'"
+              
               class="glyphicon glyphicon-pencil mr-1"
               type="button"
               v-on:click="editar(gestor.email)"
@@ -48,6 +48,7 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+
 export default {
   name: "emailGestor",
   data() {
@@ -79,6 +80,7 @@ export default {
           .then(res => {
             console.log(res);
             alert("Gestor removido com sucesso!!!");
+            this.$router.go(0);
           })
           .catch(error => console.log(error));
       }

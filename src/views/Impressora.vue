@@ -1,24 +1,16 @@
 <template>
 
-    <div class="card-body">
-    <div class="col-lg-12">
-      <router-link
-        class="glyphicon glyphicon-plus btn-lg"
-        to="/impressora/cadastrar"
-        aria-label="Alinhar na esquerda"
-        style="color:blue"
-      >Add</router-link>
+  <div class="card-body">
+
+    <div class="btn-group" role="group" aria-label="...">
+      <button class="glyphicon glyphicon-plus" type="button" v-on:click="cadastrar()">Add</button>
+      <button class="glyphicon glyphicon-repeat" type="button" v-on:click="obterContadores()">Get</button>
     </div>
 
-    <div id="divListar">
-      <div class="col-lg-12">
-        <h2>Listar</h2>Clique no botão para visualizar as impressoras cadastradas
-        <button v-on:click="buscarTodos" class="glyphicon glyphicon-plus"></button>
-      </div>
-      <table id="tabImpressoras" hidden="true" class="table table-striped">
+    <div id="divListar">      
+      <table id="tabImpressoras" class="table table-striped">
         <thead>
-          <tr>
-            
+          <tr>            
             <th>Patrimonio</th>
             <th>Departamento</th>
             <th>Fabricante</th>
@@ -27,8 +19,7 @@
             <th>Conexão</th>
             <th>Cont. Mono</th>
             <th>Cont. Color</th>
-            <th>Ultimo Update</th>
-            
+            <th>Ultimo Update</th>            
             <th class="actions">Ações</th>
           </tr>
         </thead>
@@ -45,8 +36,7 @@
             <td>{{ impressora.ip }}</td>
             <td>{{ impressora.contadorMono }}</td>
             <td>{{ impressora.contadorColor }}</td>
-            <td>{{ impressora.ultimoUpdate }}</td>
-            
+            <td>{{ impressora.ultimoUpdate }}</td>            
             <button
               class="glyphicon glyphicon-trash mr-1"
               type="submit"
@@ -56,7 +46,13 @@
             <button
               class="glyphicon glyphicon-pencil mr-1"
               type="button"
-              v-on:click="editar(impressora.id)"
+              v-on:click="editar(impressora.patrimonio)"
+              style="color:blue"
+            ></button>
+            <button
+              class="glyphicon glyphicon-repeat"
+              type="button"
+              v-on:click="contar(impressora.patrimonio)"
               style="color:blue"
             ></button>
           </tr>
@@ -85,21 +81,25 @@ export default {
       impressoras: []
     };
   },
-  computed: {
-    ...mapState(["usuario", "autorizacao"])
-  },
-  methods: {
-    buscarTodos() {
-      var show = document.getElementById("tabImpressoras");
-      if (show.hidden === true) {
-        show.hidden = false;
-      }
-      axios
+  beforeMount() {
+    axios
         .get("/impressora", { headers: { Accept: "application/json" } })
         .then(res => {
           console.log(res);
           this.impressoras = res.data;
         })
+        .catch(error => console.log(error));
+    },
+  computed: {
+    ...mapState(["usuario", "autorizacao"])
+  },
+  methods: {
+    cadastrar(){
+      this.$router.push("/impressora/cadastrar/");
+    },
+    obterContadores() {
+    axios
+        .get("/impressora/agente", { headers: { Accept: "application/json" } })
         .catch(error => console.log(error));
     },
     excluir(id) {
@@ -114,8 +114,17 @@ export default {
           .catch(error => console.log(error));
       }
     },
-    editar(id) {
-      this.$router.push("/impressora/atualizar/" + id);
+    editar(patrimonio) {
+      this.$router.push("/impressora/atualizar/" + patrimonio);
+    },
+    contar(patrimonio) {
+      axios
+        .put("/impressora/contador/" + patrimonio)
+        .then(res => {
+          console.log(res);
+          this.impressoras = res.data;
+        })
+        .catch(error => console.log(error));
     }
   }
 };

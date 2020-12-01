@@ -22,6 +22,7 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+
 export default {
   name: "gestor",
     props: ['gestor'],
@@ -46,9 +47,11 @@ export default {
             console.log(res);
             this.gestor.nome = '';
             this.gestor.email = '';
-            alert("gestor alterado com sucesso!!!");
-    })
-      .catch(error => console.log(error))
+            alert("Gestor alterado com sucesso!!!");
+            this.returnGestor();            
+        })
+        .catch(error => console.log(error));
+        
     },
     buscarEmail(email) {
       console.log(email);
@@ -63,7 +66,10 @@ export default {
         .catch(error => console.log(error));
     }
   },
-created () {
+  returnGestor() {
+    this.$router.push("/gestor");
+  },
+  created () {
     this.buscarEmail(this.gestor)
   }
 }

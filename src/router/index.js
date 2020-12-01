@@ -35,7 +35,7 @@ const routes = [
     path: "/impressora",
     name: "Impressora",
     component: () => import("../views/Impressora.vue")
-  },
+  },  
   {
     path: "/impressora/cadastrar",
     name: "Impressora-Add",

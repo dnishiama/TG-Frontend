@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     token: null,
     usuario: null,
-    autorizacao:null
+    autorizacao:null,
   },
   mutations: {
     setUsuario(state, usuario) {

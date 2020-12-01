@@ -1,7 +1,6 @@
 <template>
   <div class="card-body">
     <div class="col-lg-12">
-      <h1>Bem vindo {{usuario}} - {{autorizacao}}</h1>
       <router-link
         class="glyphicon glyphicon-plus btn-lg"
         to="/departamento/cadastrar"
@@ -15,7 +14,7 @@
       <table id="tabDepartamento" class="table table-striped">
         <thead>
           <tr>
-            <th>Id</th>
+            
             <th>Campus</th>
             <th>Bloco</th>
             <th>Departamento</th>
@@ -27,7 +26,7 @@
         </thead>
         <tbody>
           <tr v-bind:departamento="departamento" v-for="departamento in departamentos" :key="departamento.id">
-            <td>{{ departamento.id }}</td>
+            
             <td>{{ departamento.campus }}</td>
             <td>{{ departamento.bloco }}</td>
             <td>{{ departamento.departamento }}</td>
@@ -45,7 +44,7 @@
               type="button"
               v-on:click="editar(departamento.id)"
               style="color:blue"
-            ></button>
+            ></button>            
           </tr>
         </tbody>
       </table>
@@ -71,11 +70,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["usuario", "autorizacao"])
+      ...mapState([
+          'usuario',
+          'autorizacao'
+      ])
   },
-
-  
-
   beforeMount() {
     console.log(this.autorizacao);
     axios
@@ -98,8 +97,7 @@ export default {
             alert("Departamento removido com sucesso!!!");
           })
           .catch(error => console.log(error));
-      }
-      
+      }      
     },
     editar(id) {
       this.$router.push("/departamento/atualizar/" + id);
