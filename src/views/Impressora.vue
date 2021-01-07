@@ -3,7 +3,8 @@
   <div class="card-body">
 
     <div class="btn-group" role="group" aria-label="...">
-      <button class="glyphicon glyphicon-plus" type="button" v-on:click="cadastrar()">Add</button>
+      <button class="glyphicon glyphicon-plus" type="button" v-on:click="cadastrar()">Online</button><br>
+      <button class="glyphicon glyphicon-plus" type="button" v-on:click="cadastrarOffline()">USB</button><br>
       <button class="glyphicon glyphicon-repeat" type="button" v-on:click="obterContadores()">Get</button>
     </div>
 
@@ -52,7 +53,7 @@
             <button
               class="glyphicon glyphicon-repeat"
               type="button"
-              v-on:click="contar(impressora.patrimonio)"
+              v-on:click="contar(impressora.serial)"
               style="color:blue"
             ></button>
           </tr>
@@ -97,6 +98,9 @@ export default {
     cadastrar(){
       this.$router.push("/impressora/cadastrar/");
     },
+    cadastrarOffline(){
+      this.$router.push("/impressora/cadastraroffline/");
+    },
     obterContadores() {
     axios
         .get("/impressora/agente", { headers: { Accept: "application/json" } })
@@ -117,9 +121,9 @@ export default {
     editar(patrimonio) {
       this.$router.push("/impressora/atualizar/" + patrimonio);
     },
-    contar(patrimonio) {
+    contar(serial) {
       axios
-        .put("/impressora/contador/" + patrimonio)
+        .put("/impressora/contador/" + serial)
         .then(res => {
           console.log(res);
           this.impressoras = res.data;

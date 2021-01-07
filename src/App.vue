@@ -6,6 +6,7 @@
       <router-link to="/gestor"> | Gestor </router-link>
       <router-link to="/departamento"> | Departamento </router-link>
       <router-link to="/impressora"> | Impressora </router-link>
+      <router-link to="/historico"> | Historico </router-link>
       <router-link to="/usuario"> | Usuario</router-link>
       <a v-if="usuario" @click="logout"> | Logout</a> 
       

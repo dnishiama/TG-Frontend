@@ -32,6 +32,11 @@ const routes = [
     props: true
   },
   {
+    path: "/historico",
+    name: "Historico",
+    component: () => import("../views/Historico.vue")
+  }, 
+  {
     path: "/impressora",
     name: "Impressora",
     component: () => import("../views/Impressora.vue")
@@ -40,6 +45,11 @@ const routes = [
     path: "/impressora/cadastrar",
     name: "Impressora-Add",
     component: () => import("../views/Impressora-Add.vue")
+  },
+  {
+    path: "/impressora/cadastraroffline",
+    name: "Impressora-Add-Offline",
+    component: () => import("../views/Impressora-Add-Offline.vue")
   },
   {
     path: "/impressora/atualizar/:id",

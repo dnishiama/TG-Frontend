@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <h1>Bem vindo! {{usuario}}</h1>
-    <p>Esta é uma aplicação exemplo que utiliza autenticação com JWT</p>
+    <p>Esta é uma aplicação desenvolvida para gerenciamento da conta de outsourcing de impressão</p>
   </div>
 </template>
 
