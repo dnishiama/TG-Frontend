@@ -20,7 +20,7 @@ axios.interceptors.request.use(config => {
     alert('Nenhum registro encontrado!')
   }
   if(error.response.status === 400) {
-    alert('Requizição invalida')
+    alert('Requisição invalida')
   }    
   else if (error.response.status === 401) {
     store.commit('logout')

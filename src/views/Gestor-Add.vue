@@ -44,12 +44,10 @@ export default {
         })
           .then(res => {
             console.log(res);
-            this.nome = "";
-            this.email = "";
-            this.$router.push({ path: "/gestor" })
-            alert("Gestor cadastrado com sucesso!!!");
+            alert("Gestor cadastrado com sucesso!!!");            
           })
-          .catch(error => console.log(error));          
+          .catch(error => console.log(error));
+        this.$router.push({ path: "/gestor" }) 
       }
     }
   }

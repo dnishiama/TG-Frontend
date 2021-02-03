@@ -56,7 +56,7 @@
 import axios from "axios";
 import { mapState } from "vuex";
 export default {
-  name: "departamentoId",
+  name: "dep",
   data() {
     return {
       id: "",
@@ -95,12 +95,13 @@ export default {
           .then(res => {
             console.log(res);
             alert("Departamento removido com sucesso!!!");
+            this.$router.go(0);
           })
           .catch(error => console.log(error));
       }      
     },
-    editar(id) {
-      this.$router.push("/departamento/atualizar/" + id);
+    editar(departamentoid) {
+      this.$router.push("/departamento/atualizar/" + departamentoid);
     }
   }
 };

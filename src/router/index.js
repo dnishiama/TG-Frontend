@@ -68,7 +68,7 @@ const routes = [
     component: () => import("../views/Departamento-Add.vue")
   },
   {
-    path: "/departamento/atualizar/:id",
+    path: "/departamento/atualizar/:dep",
     name: "Departamento-Edit",
     component: () => import("../views/Departamento-Edit.vue"),
     props: true

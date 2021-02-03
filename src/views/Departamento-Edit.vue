@@ -5,66 +5,92 @@
     </div>
     <div id="divAtualizar" class="col-lg-12">
       <form>
+        
         <div class="form-group">
-          <label for="nome">Nome</label>
-          <input type="text" class="form-control" id="nome" aria-describedby="emailHelp" placeholder="Seu nome" v-model="gestor.nome" required />
+          <label for="campus">Campus</label>
+          <input type="text" class="form-control" id="campus" placeholder="campus" v-model="depart.campus" required />
+          <label for="bloco">Bloco</label>
+          <input type="text" class="form-control" id="bloco" placeholder="bloco" v-model="depart.bloco" required />
+          <label for="departamento">Departamento</label>
+          <input type="text" class="form-control" id="departamento" placeholder="departamento" v-model="depart.departamento" required />
+          <label for="ccusto">Centro de Custos</label>
+          <input type="text" class="form-control" id="ccusto" placeholder="ccusto" v-model="depart.ccusto" required />
+          <label for="gestor">Gestor</label>
+          <select v-model="gestor" class="form-control" id="gestor" placeholder="gestor" required>
+            <option v-for="gestor in gestores" v-bind:key="gestor.id" v-bind:value="gestor.id">{{ gestor.nome }}</option>
+          </select>
         </div>
-        <div class="form-group">
-          <label for="email">Endereço de email</label>
-          <input type="email" class="form-control" id="email" placeholder="emailAsProps" v-model="gestor.email" required readonly/>
-        </div>
-        <button type="submit" class="btn btn-primary" v-on:click="editar()">Enviar</button>
+        <button type="submit" class="btn btn-primary" v-on:click="atualizar()">Enviar</button>
+
       </form>      
     </div>
   </div>
 </template>
 
+
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
 export default {
-  name: "gestor",
-    props: ['gestor'],
+  name: "departamento",
+    props: ['dep'],
   data() {
     return {
-      id: "",
-      nome: "",
-      email: ""
+      campus: "",
+      bloco: "",
+      departamento: "",
+      ccusto: "",
+      gestor: "",
+      gestores: [],
+      depart:[]
     };
   },
+  created () {
+    this.buscarDepartamento(this.dep)
+  },
+  beforeMount() {
+    axios
+        .get("/gestor", { headers: { Accept: "application/json" } })
+        .then(res => {
+          console.log(res);
+          this.gestores = res.data;
+        })
+        .catch(error => console.log(error));
+  },
+  
   computed: {
     ...mapState(["usuario", "autorizacao"])
   },
-  methods: {
-    editar() {
-        axios.put('gestor/atualizar/'+this.gestor.id,
+  methods: { 
+  
+  atualizar() {
+        console.log(this.gestor)
+        axios.put('/departamento/atualizar/'+this.depart.id, 
         {
-            nome: this.gestor.nome,
-            email: this.gestor.email,
+          campus: this.depart.campus, 
+          bloco: this.depart.bloco, 
+          departamento: this.depart.departamento, 
+          ccusto: this.depart.ccusto, 
+          gestor: {id: this.gestor},
         })
         .then(res => {
-            console.log(res);
-            this.gestor.nome = '';
-            this.gestor.email = '';
-            alert("gestor alterado com sucesso!!!");
-    })
-      .catch(error => console.log(error))
+          console.log(res);
+          alert("Departamento atualizado com sucesso!!!");
+          this.$router.push({ path: "/departamento" })
+        })
+        .catch(error => console.log(error));
     },
-    buscarEmail(email) {
-      console.log(email);
+    buscarDepartamento(id) {
       axios
-        .get("/gestor/email/" + email, {
+        .get("/departamento/" + id, {
           headers: { Accept: "application/json" }
         })
         .then(res => {
           console.log(res);
-          this.gestor = res.data;
+          this.depart = res.data;
         })
         .catch(error => console.log(error));
     }
-  },
-created () {
-    this.buscarEmail(this.gestor)
   }
 }
 </script>

@@ -51,10 +51,10 @@ export default {
             this.returnGestor();            
         })
         .catch(error => console.log(error));
+        this.$router.push({ path: "/gestor" })
         
     },
     buscarEmail(email) {
-      console.log(email);
       axios
         .get("/gestor/email/" + email, {
           headers: { Accept: "application/json" }
@@ -65,9 +65,9 @@ export default {
         })
         .catch(error => console.log(error));
     }
-  },
-  returnGestor() {
-    this.$router.push("/gestor");
+    },
+    returnGestor() {
+      this.$router.push("/gestor");
   },
   created () {
     this.buscarEmail(this.gestor)

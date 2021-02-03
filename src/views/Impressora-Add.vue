@@ -52,14 +52,13 @@ export default {
     cadastrar() {
         axios
           .post("/impressora/cadastrar/", 
-                {patrimonio: this.patrimonio,ip: this.ip,departamento: {'id': this.departamento},},
+                { patrimonio: this.patrimonio,
+                  ip: this.ip,
+                  departamento: {'id': this.departamento},},
                 {headers: { Accept: "application/json" }
           })
           .then(res => {
             console.log(res);
-            this.patromonio = "";
-            this.ip = "";
-            this.departamento = "";
             alert("Impressora cadastrada com sucesso!!!");
           })
           .catch(error => console.log(error));

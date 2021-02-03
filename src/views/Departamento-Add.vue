@@ -31,7 +31,7 @@
 import axios from "axios";
 import { mapState } from "vuex";
 export default {
-  name: "gestor",
+  name: "departamento",
   data() {
     return {
       campus: "",
@@ -57,20 +57,20 @@ export default {
   methods: {    
     cadastrar() {
         axios
-          .post("/departamento/cadastrar/", {campus: this.campus, bloco: this.bloco, departamento: this.departamento, ccusto: this.ccusto, gestor: {id: this.gestor},},
+          .post("/departamento/cadastrar/", 
+          {campus: this.campus, 
+          bloco: this.bloco, 
+          departamento: this.departamento, 
+          ccusto: this.ccusto, 
+          gestor: {id: this.gestor},},
                 {headers: { Accept: "application/json" }
         })
           .then(res => {
-            console.log(res);
-            this.campus = "";
-            this.bloco = "";
-            this.departamento = "",
-            this.ccusto = "",
-            this.gestor = "",
-            alert("Departamento cadastrado com sucesso!!!");
+            console.log(res)
+            alert("Departamento cadastrado com sucesso!!!");       
           })
           .catch(error => console.log(error));
-          
+        this.$router.push({ path: "/departamento" })   
       }
     }
   }
