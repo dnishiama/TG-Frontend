@@ -34,6 +34,7 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+
 export default {
   name: "impressora",
   data() {
@@ -44,6 +45,17 @@ export default {
       departamentos: []
     };
   },
+
+  computed: {
+    ...mapState(["usuario", "autorizacao"])
+  },
+
+  mounted() {
+    if (!this.usuario){
+      this.$router.push({ path: "/" })
+    }    
+  },
+
   beforeMount() {
     axios
         .get("/departamento", { headers: { Accept: "application/json" } })
@@ -53,9 +65,7 @@ export default {
         })
         .catch(error => console.log(error));
   },
-  computed: {
-    ...mapState(["usuario", "autorizacao"])
-  },
+
   methods: {
     cadastrar() {
         axios       

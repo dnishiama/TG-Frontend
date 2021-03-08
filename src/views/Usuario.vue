@@ -5,6 +5,7 @@
         class="glyphicon glyphicon-plus btn-lg"
         to="/usuario/cadastrar"
         aria-label="Alinhar na esquerda"
+        v-if="usuario"
         style="color:blue"
       >Add</router-link>
     </div>
@@ -16,21 +17,23 @@
             <th>Id</th>
             <th>Nome</th>
             <th>E-mail</th>
-            <th class="actions">Ações</th>
+            <th class="actions" v-if="usuario">Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-bind:usuario="usuario" v-for="usuario in usuarios" :key="usuario.id">
-            <td>{{ usuario.id }}</td>
-            <td>{{ usuario.nome }}</td>
-            <td>{{ usuario.email }}</td>
+          <tr v-bind:user="user" v-for="user in usuarios" :key="user.id">
+            <td>{{ user.id }}</td>
+            <td>{{ user.nome }}</td>
+            <td>{{ user.email }}</td>
             <button
+              v-if="usuario" 
               class="glyphicon glyphicon-trash mr-1"
               type="submit"
               style="color:red"
               v-on:click="excluir(usuario.id)"
             ></button>
             <button
+              v-if="usuario" 
               class="glyphicon glyphicon-pencil mr-1"
               type="button"
               v-on:click="editar(usuario.email)"
@@ -58,6 +61,11 @@ export default {
   },
   computed: {
     ...mapState(["usuario", "autorizacao"])
+  },
+  mounted() {
+    if (!this.usuario){
+      this.$router.push({ path: "/" })
+    }    
   },
   beforeMount() {
     axios

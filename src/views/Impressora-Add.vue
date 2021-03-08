@@ -37,6 +37,9 @@ export default {
     };
   },
   beforeMount() {
+    if (!this.usuario){
+      this.$router.push({ path: "/home" })
+    } 
     axios
         .get("/departamento", { headers: { Accept: "application/json" } })
         .then(res => {

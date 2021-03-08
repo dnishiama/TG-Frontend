@@ -3,12 +3,12 @@
     <div id="nav" class="row text-center">
       <router-link to="/login" v-if="!usuario">Login | </router-link>
       <router-link to="/">Home </router-link>
-      <router-link to="/gestor"> | Gestor </router-link>
-      <router-link to="/departamento"> | Departamento </router-link>
-      <router-link to="/impressora"> | Impressora </router-link>
-      <router-link to="/historico"> | Historico </router-link>
-      <router-link to="/usuario"> | Usuario</router-link>
-      <a v-if="usuario" @click="logout"> | Logout</a> 
+      <router-link to="/gestor" v-if="usuario"> | Gestor </router-link>
+      <router-link to="/departamento" v-if="usuario"> | Departamento </router-link>
+      <router-link to="/impressora" v-if="usuario"> | Impressora </router-link>
+      <router-link to="/historico" v-if="usuario"> | Historico </router-link>
+      <router-link to="/usuario" v-if="usuario"> | Usuario</router-link>
+      <a v-if="usuario" @click="logout"  href="/login"> | Logout</a> 
       
     </div>
     <router-view />

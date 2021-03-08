@@ -1,13 +1,10 @@
 <template>
-
   <div class="card-body">
-
-    <div class="btn-group" role="group" aria-label="...">
-      <button class="glyphicon glyphicon-plus" type="button" v-on:click="cadastrar()">Online</button><br>
-      <button class="glyphicon glyphicon-plus" type="button" v-on:click="cadastrarOffline()">USB</button><br>
-      <button class="glyphicon glyphicon-repeat" type="button" v-on:click="obterContadores()">Get</button>
+    <div class="btn-group" role="group" v-if="usuario" aria-label="...">
+      <button class="glyphicon glyphicon-plus" type="button" v-if="usuario" v-on:click="cadastrar()">Online</button><br>
+      <button class="glyphicon glyphicon-plus" type="button" v-if="usuario" v-on:click="cadastrarOffline()">USB</button><br>
+      <button class="glyphicon glyphicon-repeat" type="button" v-if="usuario" v-on:click="obterContadores()">Get</button>
     </div>
-
     <div id="divListar">      
       <table id="tabImpressoras" class="table table-striped">
         <thead>
@@ -21,12 +18,11 @@
             <th>Cont. Mono</th>
             <th>Cont. Color</th>
             <th>Ultimo Update</th>            
-            <th class="actions">Ações</th>
+            <th class="actions" v-if="usuario">Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-bind:impressora="impressora" v-for="impressora in impressoras" :key="impressora.id">
-            
+          <tr v-bind:impressora="impressora" v-for="impressora in impressoras" :key="impressora.id">         
             <td>{{ impressora.patrimonio }}</td>
             <td>{{ impressora.departamento.campus }} - 
                 {{ impressora.departamento.bloco }} - 
@@ -42,17 +38,20 @@
               class="glyphicon glyphicon-trash mr-1"
               type="submit"
               style="color:red"
+              v-if="usuario"
               v-on:click="excluir(impressora.id)"
             ></button>
             <button
               class="glyphicon glyphicon-pencil mr-1"
               type="button"
+              v-if="usuario"
               v-on:click="editar(impressora.patrimonio)"
               style="color:blue"
             ></button>
             <button
               class="glyphicon glyphicon-repeat"
               type="button"
+              v-if="usuario"
               v-on:click="contar(impressora.serial)"
               style="color:blue"
             ></button>
@@ -66,6 +65,7 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+
 export default {
   name: "impressora",
   data() {
@@ -82,45 +82,58 @@ export default {
       impressoras: []
     };
   },
+
+  computed: {
+    ...mapState(["usuario", "autorizacao"])
+  },
+
+  mounted() {
+    if (!this.usuario){
+      this.$router.push({ path: "/" })
+    }    
+  },
+
   beforeMount() {
     axios
         .get("/impressora", { headers: { Accept: "application/json" } })
-        .then(res => {
-          console.log(res);
+        .then(res => { console.log(res);
           this.impressoras = res.data;
         })
         .catch(error => console.log(error));
     },
-  computed: {
-    ...mapState(["usuario", "autorizacao"])
-  },
+
   methods: {
     cadastrar(){
       this.$router.push("/impressora/cadastrar/");
     },
+
     cadastrarOffline(){
       this.$router.push("/impressora/cadastraroffline/");
     },
-    obterContadores() {
-    axios
-        .get("/impressora/agente", { headers: { Accept: "application/json" } })
-        .catch(error => console.log(error));
-    },
+
     excluir(id) {
       var resposta = confirm("Deseja remover esse registro?");
       if (resposta == true) {
         axios
           .delete("/impressora/deletar/" + id)
-          .then(res => {
-            console.log(res);
+          .then(res => { console.log(res);
             alert("Impressora removida com sucesso!!!");
+            this.$router.go(0);
           })
           .catch(error => console.log(error));
       }
     },
+
     editar(patrimonio) {
       this.$router.push("/impressora/atualizar/" + patrimonio);
     },
+
+    obterContadores() {
+    axios
+        .get("/impressora/agente", { headers: { Accept: "application/json" } })
+        .catch(error => console.log(error));
+    },
+
     contar(serial) {
       axios
         .put("/impressora/contador/" + serial)

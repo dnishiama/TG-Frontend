@@ -33,12 +33,14 @@ export default {
 methods: {
   ...mapActions(["login"]),
   ...mapState(["usuario", "autorizacao"]),
+
   auth() {
     this.login({ 
       usuario: this.nome, 
       senha: this.senha });
     this.$router.push("/home");
   }
+  
 }
 };
 </script>

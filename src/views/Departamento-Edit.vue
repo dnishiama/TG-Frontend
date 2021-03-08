@@ -31,10 +31,13 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
-export default {
+
+export default 
+{
   name: "departamento",
-    props: ['dep'],
-  data() {
+  props: ['dep'],
+  data() 
+  {
     return {
       campus: "",
       bloco: "",
@@ -45,25 +48,29 @@ export default {
       depart:[]
     };
   },
-  created () {
-    this.buscarDepartamento(this.dep)
-  },
-  beforeMount() {
-    axios
-        .get("/gestor", { headers: { Accept: "application/json" } })
-        .then(res => {
-          console.log(res);
-          this.gestores = res.data;
-        })
-        .catch(error => console.log(error));
-  },
   
-  computed: {
+  computed: 
+  {
     ...mapState(["usuario", "autorizacao"])
   },
-  methods: { 
-  
-  atualizar() {
+
+  mounted() 
+  {
+    if (!this.usuario)
+    {
+      this.$router.push({ path: "/" })
+    }    
+  },
+
+  created () 
+  {
+    this.buscarDepartamento(this.dep)
+  },
+
+  methods: 
+  {   
+    atualizar() 
+    {
         console.log(this.gestor)
         axios.put('/departamento/atualizar/'+this.depart.id, 
         {
@@ -80,7 +87,9 @@ export default {
         })
         .catch(error => console.log(error));
     },
-    buscarDepartamento(id) {
+  
+    buscarDepartamento(id) 
+    {
       axios
         .get("/departamento/" + id, {
           headers: { Accept: "application/json" }
@@ -91,6 +100,7 @@ export default {
         })
         .catch(error => console.log(error));
     }
+
   }
 }
 </script>

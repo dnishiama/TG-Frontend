@@ -33,27 +33,37 @@ export default {
       email: ""
     };
   },
+
   computed: {
     ...mapState(["usuario", "autorizacao"])
   },
+
+  mounted() {
+    if (!this.usuario){
+      this.$router.push({ path: "/" })
+    }    
+  },
+
+  created () {
+    this.buscarEmail(this.gestor)
+  },
+
   methods: {
     editar() {
-        axios.put('gestor/atualizar/'+this.gestor.id,
-        {
+      axios
+        .put('gestor/atualizar/'+this.gestor.id, {
             nome: this.gestor.nome,
             email: this.gestor.email,
         })
-        .then(res => {
-            console.log(res);
+        .then(res => { console.log(res);
             this.gestor.nome = '';
             this.gestor.email = '';
             alert("Gestor alterado com sucesso!!!");
-            this.returnGestor();            
+            this.$router.push("/gestor");            
         })
-        .catch(error => console.log(error));
-        this.$router.push({ path: "/gestor" })
-        
+        .catch(error => console.log(error));    
     },
+
     buscarEmail(email) {
       axios
         .get("/gestor/email/" + email, {
@@ -65,12 +75,6 @@ export default {
         })
         .catch(error => console.log(error));
     }
-    },
-    returnGestor() {
-      this.$router.push("/gestor");
-  },
-  created () {
-    this.buscarEmail(this.gestor)
   }
 }
 </script>

@@ -35,6 +35,11 @@ const routes = [
     path: "/historico",
     name: "Historico",
     component: () => import("../views/Historico.vue")
+  },
+  {
+    path: "/historico/Cadastrar",
+    name: "Historico",
+    component: () => import("../views/Historico-Add.vue")
   }, 
   {
     path: "/impressora",

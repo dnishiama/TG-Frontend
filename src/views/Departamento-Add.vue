@@ -5,7 +5,6 @@
     </div>
     <div id="divCadastro" class="col-lg-12">
       <form>
-
         <div class="form-group">
           <label for="campus">Campus</label>
           <input type="text" class="form-control" id="campus" placeholder="campus" v-model="campus" required />
@@ -21,7 +20,6 @@
           </select>
         </div>
         <button type="submit" class="btn btn-primary" v-on:click="cadastrar()">Enviar</button>
-
       </form>
     </div>
   </div>
@@ -30,6 +28,7 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+
 export default {
   name: "departamento",
   data() {
@@ -42,36 +41,34 @@ export default {
       gestores: []
     };
   },
-  beforeMount() {
-    axios
-        .get("/gestor", { headers: { Accept: "application/json" } })
-        .then(res => {
-          console.log(res);
-          this.gestores = res.data;
-        })
-        .catch(error => console.log(error));
-  },
+
   computed: {
     ...mapState(["usuario", "autorizacao"])
   },
+
+  mounted() {
+    if (!this.usuario) {
+      this.$router.push({ path: "/" })
+    }    
+  },
+
   methods: {    
     cadastrar() {
         axios
-          .post("/departamento/cadastrar/", 
-          {campus: this.campus, 
-          bloco: this.bloco, 
-          departamento: this.departamento, 
-          ccusto: this.ccusto, 
-          gestor: {id: this.gestor},},
-                {headers: { Accept: "application/json" }
-        })
-          .then(res => {
-            console.log(res)
+          .post("/departamento/cadastrar/", {
+            campus: this.campus, 
+            bloco: this.bloco, 
+            departamento: this.departamento, 
+            ccusto: this.ccusto, 
+            gestor: {id: this.gestor},
+          },
+          { headers: { Accept: "application/json" } })
+          .then(res => { console.log(res)
             alert("Departamento cadastrado com sucesso!!!");       
           })
           .catch(error => console.log(error));
         this.$router.push({ path: "/departamento" })   
-      }
     }
   }
+}
 </script>

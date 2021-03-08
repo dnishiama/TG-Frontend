@@ -22,6 +22,7 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+
 export default {
   name: "gestor",
   data() {
@@ -32,23 +33,31 @@ export default {
       gestores: []
     };
   },
+
   computed: {
     ...mapState(["usuario", "autorizacao"])
   },
+
+  mounted() {
+    if (!this.usuario){
+      this.$router.push({ path: "/" })
+    }    
+  },
+
   methods: {
     cadastrar() {
         axios
-          .post("/gestor/cadastrar/", 
-              {nome: this.nome,email: this.email,},
-              {headers: { Accept: "application/json"}
-        })
-          .then(res => {
-            console.log(res);
+          .post("/gestor/cadastrar/", {
+            nome: this.nome,
+            email: this.email,
+          },
+          { headers: { Accept: "application/json"} })
+          .then(res => { console.log(res);
             alert("Gestor cadastrado com sucesso!!!");            
           })
-          .catch(error => console.log(error));
-        this.$router.push({ path: "/gestor" }) 
+          .catch(error => console.log(error))         
+          .finally(() => this.$router.push({ path: "/gestor" })) 
       }
-    }
   }
+}
 </script>

@@ -46,6 +46,9 @@ export default {
     ...mapState(["usuario", "autorizacao"])
   },
   beforeMount() {
+    if (!this.usuario){
+      this.$router.push({ path: "/home" })
+    } 
     axios
         .get("/autorizacao", { headers: { Accept: "application/json" } })
         .then(res => {

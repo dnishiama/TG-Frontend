@@ -14,7 +14,7 @@ axios.interceptors.request.use(config => {
   return res
   }, error => {
   if(error.response.status === 403) {
-  alert('Não autorizado!')
+    alert('Não autorizado!')
   }
   if(error.response.status === 404) {
     alert('Nenhum registro encontrado!')
@@ -28,7 +28,7 @@ axios.interceptors.request.use(config => {
   }
   throw error
   })
-axios.defaults.baseURL = 'http://localhost:8082/printerManager'
+axios.defaults.baseURL = 'http://localhost:8082/api'
 Vue.config.productionTip = false;
 
 new Vue({

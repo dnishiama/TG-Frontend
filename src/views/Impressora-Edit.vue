@@ -5,7 +5,6 @@
     </div>
     <div id="divAtualizar" class="col-lg-12">
       <form>
-
         <div class="form-group">
           <label for="patrimonio">Patrimônio</label>
           <input type="text" class="form-control" id="patrimonio" placeholder="Patrimônio" v-model="patrimonio" required />
@@ -17,7 +16,6 @@
           </select>
         </div>
         <button type="submit" class="btn btn-primary" v-on:click="cadastrar()">Enviar</button>
-
       </form>      
     </div>
   </div>
@@ -26,6 +24,7 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+
 export default {
   name: "impressora",
     props: ['impressora'],
@@ -42,9 +41,17 @@ export default {
       ultimoUpdate: "",
     };
   },
+
   computed: {
     ...mapState(["usuario", "autorizacao"])
   },
+
+  mounted() {
+    if (!this.usuario){
+      this.$router.push({ path: "/" })
+    }    
+  },
+
   beforeMount() {
     axios
         .get("/departamento", { headers: { Accept: "application/json" } })
@@ -54,6 +61,11 @@ export default {
         })
         .catch(error => console.log(error));
   },
+
+  created () {
+    this.buscarEmail(this.gestor)
+  },
+
   methods: {
     editar() {
         axios.put('impressora/atualizar/'+this.impressora.patrimonio,
@@ -69,6 +81,7 @@ export default {
     })
       .catch(error => console.log(error))
     },
+
     buscarEmail(email) {
       console.log(email);
       axios
@@ -82,8 +95,7 @@ export default {
         .catch(error => console.log(error));
     }
   },
-  created () {
-    this.buscarEmail(this.gestor)
-  }
+
+  
 }
 </script>
