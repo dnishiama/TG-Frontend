@@ -7,18 +7,20 @@
       <form>
         
         <div class="form-group">
+          <center>
           <label for="campus">Campus</label>
-          <input type="text" class="form-control" id="campus" placeholder="campus" v-model="depart.campus" required />
+          <input type="text" class="form-control" id="campus" placeholder="campus" v-model="depart.campus" style="width:300px;" required />
           <label for="bloco">Bloco</label>
-          <input type="text" class="form-control" id="bloco" placeholder="bloco" v-model="depart.bloco" required />
+          <input type="text" class="form-control" id="bloco" placeholder="bloco" v-model="depart.bloco" style="width:300px;" required />
           <label for="departamento">Departamento</label>
-          <input type="text" class="form-control" id="departamento" placeholder="departamento" v-model="depart.departamento" required />
+          <input type="text" class="form-control" id="departamento" placeholder="departamento" v-model="depart.departamento" style="width:300px;" required />
           <label for="ccusto">Centro de Custos</label>
-          <input type="text" class="form-control" id="ccusto" placeholder="ccusto" v-model="depart.ccusto" required />
+          <input type="text" class="form-control" id="ccusto" placeholder="ccusto" v-model="depart.ccusto" style="width:300px;" required />
           <label for="gestor">Gestor</label>
-          <select v-model="gestor" class="form-control" id="gestor" placeholder="gestor" required>
+          <select v-model="gestor" class="form-control" id="gestor" placeholder="gestor" style="width:300px;" required>
             <option v-for="gestor in gestores" v-bind:key="gestor.id" v-bind:value="gestor.id">{{ gestor.nome }}</option>
           </select>
+          </center>
         </div>
         <button type="submit" class="btn btn-primary" v-on:click="atualizar()">Enviar</button>
 

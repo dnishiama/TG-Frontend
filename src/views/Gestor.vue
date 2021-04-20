@@ -9,7 +9,7 @@
         style="color:blue"
       >Add</router-link>
     </div>
-    <div id="divListar">
+    <div id="divListar" class="col-lg-12">
       <table id="tabGestor" class="table table-striped">
         <thead>
           <tr>            
@@ -34,7 +34,7 @@
               type="button"
               v-if="usuario"
               v-on:click="editar(gestor.email)"
-              style="color:blue"
+              style="color:blue;"
             ></button>
           </tr>
         </tbody>
@@ -45,7 +45,7 @@
 
 <script>
 import axios from "axios";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "emailGestor",
@@ -59,11 +59,10 @@ export default {
   },
 
   computed: {
-    ...mapState(["usuario", "autorizacao"]),
-    ...mapMutations
+    ...mapState(['usuario', 'autorizacao'])
   },
 
-  mounted() {
+  afterMounted() {
     if (!this.usuario){
       this.$router.push({ path: "/" })
     }    

@@ -1,8 +1,10 @@
 <template>
   <div class="text-center">
-    <h1>Bem vindo {{usuario | capitalize}}</h1>
+    <h1>Bem vindo <strong>{{usuario | capitalize}}</strong></h1>
+    <h4>
+    <p v-if="usuario">Utilize os links acima para ter acesso aos recursos do sistema. </p>
     <p v-if="!usuario">Faça o login para ter acesso ao sistema.</p>
-
+    </h4>
   </div>
 </template>
 
@@ -18,7 +20,9 @@ export default {
 },
 
 computed: {
-    ...mapState(["usuario", "autorizacao"])
+    ...mapState([
+      'usuario'
+    ])
   }
 };
 </script>

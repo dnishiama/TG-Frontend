@@ -1,48 +1,35 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import axios from "axios";
-import router from '../router';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import VuexPersist from 'vuex-persist'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
+
+const vuexPersist = new VuexPersist({
+  key: 'my-sec-app',
+  storage: localStorage
+})
 
 export default new Vuex.Store({
+  plugins: [
+    vuexPersist.plugin
+  ],
   state: {
-    token: null,
     usuario: null,
-    autorizacao:null,
+    token: null
   },
   mutations: {
-    setUsuario(state, usuario) {
-      state.usuario = usuario;
-      },
-    setToken(state, token) {
-      state.token = token;    
+    setUsuario (state, usuario) {
+      state.usuario = usuario
     },
-    setAutorizacao(state, autorizacao){
-      state.autorizacao=autorizacao;
+    setToken (state, token)  {
+      state.token = token
     },
-    logout(state) {
-      state.token = null;
-      state.usuario = null;
-      state.autorizacao = null;
+    logout (state) {
+      state.token = null
+      state.usuario = null
     }
   },
   actions: {
-    login(context, { usuario, senha }) {
-      axios
-      .post("login", {
-        nome: usuario,
-        senha: senha
-      })
-      .then(res => {
-        console.log(res);
-        context.commit('setUsuario', usuario);
-        context.commit('setToken', res.data.token);
-        context.commit('setAutorizacao',res.data.autorizacao);
-        router.push('/');
-      })
-      .catch(error => console.log(error));
-      }
-  },
-  modules: {}
-});
+
+  }
+})

@@ -38,7 +38,7 @@ const routes = [
   },
   {
     path: "/historico/Cadastrar",
-    name: "Historico",
+    name: "Historico-Add",
     component: () => import("../views/Historico-Add.vue")
   }, 
   {

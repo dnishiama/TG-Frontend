@@ -88,8 +88,7 @@ export default
     }    
   },
 
-  beforeMount() {
-    console.log(this.autorizacao);
+  async beforeMount() {
     axios
         .get("/departamento", { headers: { Accept: "application/json" } })
         .then(res => { console.log(res);

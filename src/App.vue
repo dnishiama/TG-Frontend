@@ -8,27 +8,29 @@
       <router-link to="/impressora" v-if="usuario"> | Impressora </router-link>
       <router-link to="/historico" v-if="usuario"> | Historico </router-link>
       <router-link to="/usuario" v-if="usuario"> | Usuario</router-link>
-      <a v-if="usuario" @click="logout"  href="/login"> | Logout</a> 
-      
+      <a v-if="usuario" @click="logout"  href="/login"> | Logout</a>      
     </div>
     <router-view />
   </div>
 </template>
 
-
-
 <script>
-import { mapState } from "vuex";
-import { mapMutations } from "vuex";
+import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default {
-   computed: {
-    ...mapState(["usuario", "autorizacao"])
+  name: 'app',
+  computed: {
+    ...mapState([
+      'usuario'
+    ])
   },
   methods: {
-    ...mapMutations(['logout'])
+    ...mapMutations([
+      'logout'
+    ])
   }
-};
+}
 </script>
 
 
