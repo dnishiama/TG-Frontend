@@ -1,69 +1,111 @@
 <template>
-  <div class="card-body">
-    <div class="col-lg-12">
-      <h2>Cadastro</h2>
+  <div class="parse">
+    <h1>Cadastro da Fatura</h1>
+    <br> 
+    
+    <center>
+      <div class="form-inline" id="form">
+        <h4>Anexe o arquivo CSV abaixo: </h4><br>
+        <input id="fileInput" class="form-control" type="file" @change="upload"><br><br> 
+        <label for="mes">Mês Ref.</label>
+        <input type="text" class="form-control" id="mesRef" v-model="mesReferencia" placeholder="Mes Ref." style="width:80px;" required /> &nbsp; &nbsp;
+        <label for="ano">Ano Ref.</label>
+        <input type="text" class="form-control" id="anoRef" v-model="anoReferencia" placeholder="Ano Ref." style="width:80px;" required /> <br> <br>
+        <button type="submit" class="btn btn-primary" v-on:click="save()">Enviar</button>
+      </div>           
+    </center>
+
+    <div id="divListar">      
+      <table id="tabHistorico" class="table table-striped">
+        <thead>
+          <tr>            
+            <th>Patrimonio</th>
+            <th>Contador Mono</th>
+            <th>Produção Mono</th>
+            <th>Contador Color</th>
+            <th>Produção Color</th>          
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-bind:eqp="eqp" v-for="eqp in impressoras" :key="eqp.patrimonio">            
+          <tr v-for="eqp in impressoras" :key="eqp.patrimonio">            
+            <td>{{ eqp.patrimonio }}</td>        
+            <td>{{ eqp.contadorMono }}</td>
+            <td>{{ eqp.producaoMono }}</td>
+            <td>{{ eqp.contadorColor }}</td>
+            <td>{{ eqp.producaoColor }}</td>                    
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div id="divCadastro" class="col-lg-12">
-      <form>
-        <center>
-        <div class="form-group"> 
-          <label for="nome">Nome</label>
-          <input type="text" class="form-control" id="nome" aria-describedby="emailHelp" placeholder="Seu nome" v-model="nome" style="width:300px;" required />
-        </div>
-        <div class="form-group">
-          <label for="email">Endereço de email</label>
-          <input type="email" class="form-control" id="email" placeholder="Seu email" v-model="email" style="width:300px;" required />
-        </div>
-        <button type="submit" class="btn btn-primary" v-on:click="cadastrar()">Enviar</button>
-        </center>
-      </form>
-    </div>
+
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import { mapState } from "vuex";
+  import Papa from 'papaparse'
+  import axios from "axios";
+  import { mapState } from "vuex";
 
-export default {
-  name: "historico",
-  data() {
-    return {
-      id: "",
-      Patrimonio: "",
-      MesReferencia: "",
-      AnoReferencia: "",
-      ContadorMono: "",
-      ContadorColor: "",
-      ultimoUpdate: "",
-      historicos: []
-    };
-  },
-
-  computed: {
-    ...mapState(['usuario', 'autorizacao'])
-  },
-
-  mounted() {
-    if (!this.usuario){
-      this.$router.push({ path: "/" })
-    }    
-  },
-
-  methods: {
-    cadastrar() {
-        axios
-          .post("/historico/cadastrar/", {
-            nome: this.nome,
-            email: this.email,
-          },
-          { headers: { Accept: "application/json"} })
-          .then(res => { console.log(res);
-            alert("Historico cadastrado com sucesso!!!");            
-          })
-          .catch(error => console.log(error))         
-          .finally(() => this.$router.push({ path: "/Historico" })) 
+  export default {
+    name: 'parse',
+    data () {
+      return {
+        Patrimonio: "",
+        ContadorMono: "",
+        ContadorColor: "",
+        ProducaoMono: "",
+        ProducaoColor: "",
+        mesReferencia: "",
+        anoReferencia: "",
+        impressora: "",
+        impressoras: [],
       }
+    },
+    computed: {
+    ...mapState(['usuario', 'autorizacao'])
+    },
+    mounted() {
+      if (!this.usuario){
+        this.$router.push({ path: "/" })
+      }    
+    },
+    methods: {
+      upload () {
+        const that = this
+        const fileToLoad = event.target.files[0]
+        const reader = new FileReader()
+        reader.onload = fileLoadedEvent => {
+          Papa.parse(fileLoadedEvent.target.result, {
+            header: true,
+            complete (results) {
+              console.log('complete', results)
+              that.impressoras = JSON.parse(JSON.stringify(results.data))
+              that.impressora = JSON.stringify(results.data)
+            },
+            error (errors) {
+              console.log('error', errors)
+            }
+          })
+        }
+        reader.readAsText(fileToLoad)
+      },
+      async save () {
+        await axios.post('/historico/cadastrar/'+ this.mesReferencia + '/' + this.anoReferencia, 
+            this.impressoras,
+          { headers: { Accept: "application/json"} })
+          .then(res => 
+          { 
+            console.log(res)
+            alert("Cadastrado com sucesso!!!")
+            this.$router.push({ path: "/historico"})
+          })
+          .catch(error => {
+            console.log(error)
+            alert("Não foi possível cadastrar o historico! Erro: "+error)
+            this.$router.push({ path: "/historico"})
+          })   
+      }
+    }
   }
-}
 </script>
