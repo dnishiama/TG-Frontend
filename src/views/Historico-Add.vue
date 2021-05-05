@@ -44,6 +44,8 @@
 
 <script>
   import Papa from 'papaparse'
+  import Blob from 'blob'
+  import FileSaver from 'file-saver'
   import axios from "axios";
   import { mapState } from "vuex";
 
@@ -98,6 +100,10 @@
           { 
             console.log(res)
             alert("Cadastrado com sucesso!!!")
+            
+            const blob = new Blob([this.parseJSONtoCSV(JSON.stringify(res))], { type: 'text/csv' })
+            FileSaver.saveAs(blob,  this.mesReferencia + '.' + this.anoReferencia+'.csv')
+            
             this.$router.push({ path: "/historico"})
           })
           .catch(error => {
@@ -105,6 +111,10 @@
             alert("Não foi possível cadastrar o historico! Erro: "+error)
             this.$router.push({ path: "/historico"})
           })   
+      },
+
+      parseJSONtoCSV (res) {
+        return Papa.unparse(res, {delimiter: ";"})
       }
     }
   }
