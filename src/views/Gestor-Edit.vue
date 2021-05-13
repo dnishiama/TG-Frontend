@@ -51,8 +51,8 @@ export default {
   },
 
   methods: {
-    editar() {
-      axios
+    async editar() {
+      await axios
         .put('gestor/atualizar/'+this.gestor.id, {
             nome: this.gestor.nome,
             email: this.gestor.email,

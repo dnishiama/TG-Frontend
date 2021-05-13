@@ -78,7 +78,8 @@
         const fileToLoad = event.target.files[0]
         const reader = new FileReader()
         reader.onload = fileLoadedEvent => {
-          Papa.parse(fileLoadedEvent.target.result, {
+          Papa.parse(fileLoadedEvent.target.result,  {
+            skipEmptyLines: true,
             header: true,
             complete (results) {
               console.log('complete', results)
@@ -101,8 +102,13 @@
             console.log(res)
             alert("Cadastrado com sucesso!!!")
             
-            const blob = new Blob([this.parseJSONtoCSV(JSON.stringify(res))], { type: 'text/csv' })
-            FileSaver.saveAs(blob,  this.mesReferencia + '.' + this.anoReferencia+'.csv')
+            axios
+            .get("/historico/rateio/"+ this.mesReferencia + '/' + this.anoReferencia, { headers: { Accept: "application/json" } })
+            .then(rateio => { console.log(rateio);
+              const blob = new Blob([this.parseJSONtoCSV(JSON.stringify(rateio))], { type: 'text/csv' })
+              FileSaver.saveAs(blob,  this.mesReferencia + '.' + this.anoReferencia+'.csv')
+            })
+            .catch(error => console.log(error));
             
             this.$router.push({ path: "/historico"})
           })

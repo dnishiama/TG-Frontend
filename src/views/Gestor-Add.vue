@@ -47,16 +47,16 @@ export default {
   },
 
   methods: {
-    cadastrar() {
-        axios.post("/gestor/cadastrar/", {
+    async cadastrar() {
+        await axios.post("/gestor/cadastrar/", {
             nome: this.nome,
             email: this.email,},
           { headers: { Accept: "application/json"} })
           .then(res => 
           { 
-            console.log(res)
-            alert(res.data.nome + " cadastrado com sucesso!!!")
             this.$router.push({ path: "/gestor"})
+            alert(res.data.nome + " cadastrado com sucesso!!!")
+            
           })
           .catch(error => {
             console.log(error)

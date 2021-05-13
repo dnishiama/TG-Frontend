@@ -2,6 +2,7 @@
   <div class="card-body">
     <div class="btn-group" role="group" aria-label="...">
       <button class="glyphicon glyphicon-plus" type="button" v-on:click="cadastrar()">Cadastrar Fatura</button><br>  
+      <button class="glyphicon glyphicon-plus" type="button" v-on:click="rateio()">Rateio Fatura</button><br>  
     </div>
     <div id="divListar">      
       <table id="tabHistorico" class="table table-striped">
@@ -81,6 +82,9 @@ export default {
   methods: { 
     cadastrar(){
       this.$router.push("/historico/cadastrar/");
+    },
+    rateio(){
+      this.$router.push("/historico/rateio/");
     }
   }
 };
