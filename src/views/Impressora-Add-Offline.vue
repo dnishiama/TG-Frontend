@@ -70,14 +70,16 @@ export default {
     cadastrar() {
         axios       
           .post("/impressora/cadastraroffline/", 
-                {patrimonio: this.patrimonio,
-                ip: "USB",
-                fabricante: this.fabricante,
-                modelo: this.modelo,
-                serial: this.serial,
-                contadorMono: this.contadorMono,
-                contadorColor: this.contadorColor,                
-                departamento: {'id': this.departamento},},
+                {
+                  patrimonio: this.patrimonio,
+                  ip: "USB",
+                  fabricante: this.fabricante,
+                  modelo: this.modelo,
+                  serial: this.serial,
+                  contadorMono: this.contadorMono,
+                  contadorColor: this.contadorColor,                
+                  departamento: {'id': this.departamento},
+                },
                 {headers: { Accept: "application/json" }
           })
           .then(res => {

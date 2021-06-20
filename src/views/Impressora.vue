@@ -45,7 +45,7 @@
               class="glyphicon glyphicon-pencil mr-1"
               type="button"
               v-if="usuario"
-              v-on:click="editar(impressora.patrimonio)"
+              v-on:click="editar(impressora.id, impressora.ip)"
               style="color:blue"
             ></button>
             <button
@@ -67,7 +67,7 @@ import axios from "axios";
 import { mapState } from "vuex";
 
 export default {
-  name: "impressora",
+  name: "imp",
   data() {
     return {
       id: "",
@@ -124,8 +124,13 @@ export default {
       }
     },
 
-    editar(patrimonio) {
-      this.$router.push("/impressora/atualizar/" + patrimonio);
+    editar(id, ip) {
+      if (ip == "USB"){
+        this.$router.push("/impressora/atualizarOffline/" + id);
+      }
+      else{
+        this.$router.push("/impressora/atualizarOnline/" + id);
+      }
     },
 
     obterContadores() {

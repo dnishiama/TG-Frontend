@@ -84,7 +84,6 @@
             complete (results) {
               console.log('complete', results)
               that.impressoras = JSON.parse(JSON.stringify(results.data))
-              that.impressora = JSON.stringify(results.data)
             },
             error (errors) {
               console.log('error', errors)

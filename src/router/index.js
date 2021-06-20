@@ -62,9 +62,15 @@ const routes = [
     component: () => import("../views/Impressora-Add-Offline.vue")
   },
   {
-    path: "/impressora/atualizar/:id",
-    name: "Impressora-Edit",
-    component: () => import("../views/Impressora-Edit.vue"),
+    path: "/impressora/atualizarOnline/:imp",
+    name: "Impressora-Edit-Online",
+    component: () => import("../views/Impressora-Edit-Online.vue"),
+    props: true
+  },
+  {
+    path: "/impressora/atualizarOffline/:imp",
+    name: "Impressora-Edit-Offline ",
+    component: () => import("../views/Impressora-Edit-Offline.vue"),
     props: true
   },
   {

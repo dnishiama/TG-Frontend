@@ -17,7 +17,7 @@
           <label for="ccusto">Centro de Custos</label>
           <input type="text" class="form-control" id="ccusto" placeholder="ccusto" v-model="depart.ccusto" style="width:300px;" required />
           <label for="gestor">Gestor</label>
-          <select v-model="gestor" class="form-control" id="gestor" placeholder="gestor" style="width:300px;" required>
+          <select v-model="depart.gestor.id" class="form-control" id="gestor" placeholder="gestor" style="width:300px;" required>
             <option v-for="gestor in gestores" v-bind:key="gestor.id" v-bind:value="gestor.id">{{ gestor.nome }}</option>
           </select>
           </center>
@@ -69,23 +69,32 @@ export default
     this.buscarDepartamento(this.dep)
   },
 
+  beforeMount() {
+    axios
+        .get("/gestor", { headers: { Accept: "application/json" } })
+        .then(res => { console.log(res);
+          this.gestores = res.data;
+        })
+        .catch(error => console.log(error));
+  },
+
   methods: 
   {   
     atualizar() 
     {
-        console.log(this.gestor)
+        let self = this;
         axios.put('/departamento/atualizar/'+this.depart.id, 
         {
           campus: this.depart.campus, 
           bloco: this.depart.bloco, 
           departamento: this.depart.departamento, 
           ccusto: this.depart.ccusto, 
-          gestor: {id: this.gestor},
+          gestor: {id: this.depart.gestor.id},
         })
         .then(res => {
           console.log(res);
           alert("Departamento atualizado com sucesso!!!");
-          this.$router.push({ path: "/departamento" })
+          self.$router.push({ path: "/departamento" })
         })
         .catch(error => console.log(error));
     },

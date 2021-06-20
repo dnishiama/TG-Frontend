@@ -30,13 +30,13 @@
               class="glyphicon glyphicon-trash mr-1"
               type="submit"
               style="color:red"
-              v-on:click="excluir(usuario.id)"
+              v-on:click="excluir(user.id)"
             ></button>
             <button
               v-if="usuario" 
               class="glyphicon glyphicon-pencil mr-1"
               type="button"
-              v-on:click="editar(usuario.email)"
+              v-on:click="editar(user.email)"
               style="color:blue"
             ></button>
           </tr>
@@ -84,7 +84,8 @@ export default {
           .delete("/usuario/deletar/" + id)
           .then(res => {
             console.log(res);
-            alert("Usuario removido com sucesso!!!");
+            this.$router.go(0);
+            alert("Usuario removido com sucesso!!!");            
           })
           .catch(error => console.log(error));
       }

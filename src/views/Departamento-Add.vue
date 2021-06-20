@@ -40,7 +40,7 @@ export default {
       departamento: "",
       ccusto: "",
       gestor: "",
-      gestores: []
+      gestores: [],
     };
   },
 
@@ -64,26 +64,23 @@ export default {
   },
 
   methods: {    
-    cadastrar() {
-        axios
+    async cadastrar() {
+        await axios
           .post("/departamento/cadastrar/", {
             campus: this.campus, 
             bloco: this.bloco, 
             departamento: this.departamento, 
             ccusto: this.ccusto, 
             gestor: {id: this.gestor},
-          },
-          { headers: { Accept: "application/json" } 
+          },{ headers: { Accept: "application/json" } 
           }).then(res => { 
-
-            console.log(res)
-            alert("Departamento cadastrado com sucesso!!!");
-            this.$router.push('Departamento')     
-
+            
+            alert(res+ " - Departamento cadastrado com sucesso!!!")
+            this.$router.push({path: "/departamento"})
           }).catch(error => {
             console.log(error)
           });
-           
+                    
     }
   }
 }

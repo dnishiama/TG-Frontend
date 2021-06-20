@@ -64,6 +64,7 @@ export default {
                  {headers: { Accept: "application/json" }          
         })
           .then(res => {
+            this.$router.push("/usuario");
             console.log(res);
             this.id = "";
             this.nome = "";
@@ -71,7 +72,6 @@ export default {
             this.senha = "";
             this.autorizacao = "";
             alert("Usuario cadastrado com sucesso!!!");
-            this.$router.push("/usuario/" );
           })
           .catch(error => console.log(error));
       }
